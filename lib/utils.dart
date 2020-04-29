@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 Future<String> selectDate(BuildContext context, dynamic model, String date) async {
   DateTime initialDate = date != null ?  toDate(date) : DateTime.now();
@@ -12,6 +14,21 @@ Future<String> selectDate(BuildContext context, dynamic model, String date) asyn
     model.setChosenDate(DateFormat.yMMMMd('en_US').format(picked.toLocal()));
   }
   return "${picked.year},${picked.month},${picked.day}";
+}
+
+Future<String> scanQR(BuildContext context, dynamic model, String link) async {
+  try {
+    var result = await BarcodeScanner.scan();
+    String picked = result.rawContent;
+    if (picked == null) picked = link;
+    if (picked != null) {
+      model.setChosenLink(picked);
+      return picked;
+    }
+  } catch (e) {
+    print(e);
+  }
+  return link;
 }
 
 Color toColor(String color) {

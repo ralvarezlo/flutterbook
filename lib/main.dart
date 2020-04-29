@@ -5,6 +5,7 @@ import 'appointments/Appointments.dart';
 import 'contacts/Avatar.dart';
 import 'contacts/Contacts.dart';
 import 'tasks/Tasks.dart';
+import 'links/Links.dart';
 
 void main() {
   startMeUp() async {
@@ -45,7 +46,8 @@ class FlutterBook extends StatelessWidget {
                       Contacts(),
                       Notes(),
                       Tasks(),
-                      _Dummy('LinkSaver')
+                      //_Dummy('LinkSaver')
+                      Links()
                     ]
                 )
             )
