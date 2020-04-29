@@ -36,7 +36,7 @@ class FlutterBook extends StatelessWidget {
                           Tab(icon: Icon(Icons.contacts), text: 'Contacts'),
                           Tab(icon: Icon(Icons.note), text: 'Notes'),
                           Tab(icon: Icon(Icons.assignment_turned_in), text: 'Tasks'),
-                          Tab(icon: Icon(Icons.attachment), text: 'LinkSaver')
+                          Tab(icon: Icon(Icons.settings_overscan), text: 'QR Reader')
                         ]
                     )
                 ),

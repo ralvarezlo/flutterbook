@@ -19,9 +19,10 @@ Future<String> selectDate(BuildContext context, dynamic model, String date) asyn
 Future<String> scanQR(BuildContext context, dynamic model, String link) async {
   try {
     var result = await BarcodeScanner.scan();
-    String picked = result.rawContent;
+    String picked = result;
     if (picked == null) picked = link;
     if (picked != null) {
+      print(picked);
       model.setChosenLink(picked);
       return picked;
     }
