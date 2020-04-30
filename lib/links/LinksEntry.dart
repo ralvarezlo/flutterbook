@@ -98,6 +98,9 @@ class LinksEntry extends StatelessWidget {
     );
   }
 
+
+  /// if the entity isn't null and has a qr link read it returns that link,
+  /// otherwise it returns empty
   String _actLink() {
     if (linksModel.entityBeingEdited != null && linksModel.entityBeingEdited.hasLink()) {
       return linksModel.entityBeingEdited.actLink;

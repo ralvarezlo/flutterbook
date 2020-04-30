@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 
 Future<String> selectDate(BuildContext context, dynamic model, String date) async {
@@ -16,6 +15,7 @@ Future<String> selectDate(BuildContext context, dynamic model, String date) asyn
   return "${picked.year},${picked.month},${picked.day}";
 }
 
+/// Uses [BarcodeSscanner] to scan the QR code
 Future<String> scanQR(BuildContext context, dynamic model, String link) async {
   try {
     var result = await BarcodeScanner.scan();

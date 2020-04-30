@@ -6,11 +6,13 @@ class BaseModel<T> extends Model {
   List<T> entityList = [];
   T entityBeingEdited;
 
+  /// sets the index for the indexed stack
   void setStackIndex(int stackIndex) {
     this.stackIndex = stackIndex;
     notifyListeners();
   }
 
+  /// loads the entries from the [database] and notifies the listeners
   void loadData(database) async {
     entityList.clear();
     entityList.addAll(await database.getAll());
@@ -18,6 +20,7 @@ class BaseModel<T> extends Model {
   }
 }
 
+/// Sets the chosenDate to be used in the descendants and notifies the listeners
 mixin DateSelection on Model {
   String chosenDate;
 
@@ -27,6 +30,7 @@ mixin DateSelection on Model {
   }
 }
 
+/// Similar to [DateSelection] but for the links to be read in the QR Scanner
 mixin LinkSelection on Model{
   String chosenLink;
 
