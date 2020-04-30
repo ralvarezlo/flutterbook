@@ -5,9 +5,10 @@ import 'LinksDBWorker.dart';
 import 'LinksModel.dart' show ULink, LinksModel, linksModel;
 
 class LinksList extends StatelessWidget {
-
+  int colorOpacity = 500;
   @override
   Widget build(BuildContext context) {
+
     return ScopedModel<LinksModel>(
         model: linksModel,
         child: ScopedModelDescendant<LinksModel>(
@@ -29,7 +30,7 @@ class LinksList extends StatelessWidget {
                           actLink = task.actLink;
                         }
                         return Container(
-                          color: Colors.pink,
+                          color: Colors.lightBlueAccent,
                           child: Slidable(
                               delegate: SlidableDrawerDelegate(),
                               actionExtentRatio: .25,
@@ -43,11 +44,13 @@ class LinksList extends StatelessWidget {
                               ],
 
                               child: ListTile(
-                                title: Text(
-                                    "${task.description}",
-                                    style: task.completed ?
-                                    TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
-                                    TextStyle(color: Theme.of(context).textTheme.title.color)),
+                                title: Center(
+                                  child: Text(
+                                      "${task.description}",
+                                      style: task.completed ?
+                                      TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
+                                      TextStyle(color: Theme.of(context).textTheme.title.color)),
+                                ),
                                 subtitle: task.actLink == null ? null :
                                 Text(actLink, style: task.completed ?
                                     TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
@@ -83,7 +86,7 @@ class LinksList extends StatelessWidget {
         barrierDismissible: false,
         builder: (BuildContext alertContext) {
           return AlertDialog(
-              title: Text('Delete ULink'),
+              title: Text('Delete QR Scan'),
               content: Text('Really delete ${note.description}?'),
               actions: [
                 FlatButton(
