@@ -10,21 +10,22 @@ class LinksEntry extends StatelessWidget {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  /// Initializes and sets a listener pertaining to the description of the entity
+  /// being edited using a text controller
   LinksEntry() {
     _descriptionEditingController.addListener(() {
       linksModel.entityBeingEdited.description = _descriptionEditingController.text;
     });
   }
 
+  /// Builds a scaffold as a [ScopedModelDescendant] containing the entrypoints
+  /// for the information of an ULink
   @override
   Widget build(BuildContext context) {
     return ScopedModel<LinksModel>(
       model: linksModel,
       child: ScopedModelDescendant<LinksModel>(
           builder: (BuildContext context, Widget child, LinksModel model) {
-
-            //- Correction:
-            // add the following two lines for "editing" an existing note
             if (model.entityBeingEdited != null) {
               _descriptionEditingController.text =
                   model.entityBeingEdited.description;
@@ -104,6 +105,7 @@ class LinksEntry extends StatelessWidget {
     return '';
   }
 
+  /// Saves the entity in the database
   void _save(BuildContext context, LinksModel model) async {
     if (!_formKey.currentState.validate()) {
       return;

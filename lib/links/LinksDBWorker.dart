@@ -18,6 +18,8 @@ class LinksDBWorker {
 
   Future<Database> get database async => _db ??= await _init();
 
+  /// Initializes the SQLite database with a table representing the structure of
+  /// [ULink]
   Future<Database> _init() async {
     return await openDatabase(DB_NAME,
         version: 1,
@@ -35,6 +37,7 @@ class LinksDBWorker {
     );
   }
 
+  /// Creates an entry of [ULink] in the database table.
   @override
   Future<int> create(ULink ulink) async {
     Database db = await database;
@@ -45,12 +48,14 @@ class LinksDBWorker {
     );
   }
 
+  /// Given the [id], it deletes the corresponding entry
   @override
   Future<void> delete(int id) async {
     Database db = await database;
     await db.delete(TBL_NAME, where: "$KEY_ID = ?", whereArgs: [id]);
   }
 
+  /// given the [id] it returns the corresponding [ULink] entry
   @override
   Future<ULink> get(int id) async {
     Database db = await database;
@@ -58,6 +63,7 @@ class LinksDBWorker {
     return values.isEmpty ? null : _ulinkFromMap(values.first);
   }
 
+  /// Gets all the stored [ULink] from the table [TBL_NAME]
   @override
   Future<List<ULink>> getAll() async {
     Database db = await database;
@@ -65,6 +71,7 @@ class LinksDBWorker {
     return values.isNotEmpty ? values.map((m) => _ulinkFromMap(m)).toList() : [];
   }
 
+  /// Updates the entry of the given [ULink]
   @override
   Future<void> update(ULink ulink) async {
     Database db = await database;
@@ -72,6 +79,7 @@ class LinksDBWorker {
         where: "$KEY_ID = ?", whereArgs: [ulink.id]);
   }
 
+  /// Creates a [ULink] instance given the map
   ULink _ulinkFromMap(Map<String, dynamic> map) {
     return ULink()
       ..id = map[KEY_ID]
@@ -80,6 +88,7 @@ class LinksDBWorker {
       ..completed = map[KEY_COMPLETED] != 0;
   }
 
+  /// Creates a map of strigns given an [ULink] instance
   Map<String, dynamic> _ulinkToMap(ULink ulink) {
     return Map<String, dynamic>()
       ..[KEY_ID] = ulink.id

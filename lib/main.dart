@@ -7,6 +7,7 @@ import 'contacts/Contacts.dart';
 import 'tasks/Tasks.dart';
 import 'links/Links.dart';
 
+/// Serves as the entry-point to run the [FlutterBook] application
 void main() {
   startMeUp() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +16,9 @@ void main() {
   }
   startMeUp();
 }
-
+/// This is the main widget that will be shown through the execution of the app.
+/// it hosts instances of [Appointments] , [Contacts], [Links], [Notes] and
+/// [Tasks] to create the agenda-like application.
 class FlutterBook extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class FlutterBook extends StatelessWidget {
             length: 5,
             child: Scaffold(
                 appBar: AppBar(
-                    title: Text('Ricardo Alvarez'),
+                    title: Text('Flutter Book'),
                     bottom: TabBar(
                         tabs: [
                           Tab(icon: Icon(Icons.date_range), text: 'Appointments'),
@@ -46,23 +49,11 @@ class FlutterBook extends StatelessWidget {
                       Contacts(),
                       Notes(),
                       Tasks(),
-                      //_Dummy('LinkSaver')
                       Links()
                     ]
                 )
             )
         )
     );
-  }
-}
-
-class _Dummy extends StatelessWidget {
-  final _title;
-
-  _Dummy(this._title);
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(child: Text(_title));
   }
 }

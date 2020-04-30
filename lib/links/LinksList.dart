@@ -4,18 +4,23 @@ import 'LinksDBWorker.dart';
 import 'LinksModel.dart' show ULink, LinksModel, linksModel;
 
 class LinksList extends StatelessWidget {
+  /// static index that will be used to signal which color will be used for
+  /// coloring the items in the gridview
   static num colorPicker = 0;
+  /// Collection of colors to be used in the gridview items
   static final colors = [Colors.blueAccent, Colors.lightBlueAccent,
                           Colors.cyanAccent, Colors.greenAccent];
 
+  /// Uses [colorPicker] to iterate through [colors] with a maximum value of 3
   Color iterateColor() {
-    colorPicker = (colorPicker+1)%3;
+    colorPicker = (colorPicker+1)%4;
     return colors[colorPicker];
   }
 
+  /// Builds a Scaffold containing a Gridview with containers wrapped in
+  /// gesture detectors that on long pressed will delete the entry
   @override
   Widget build(BuildContext context) {
-
     return ScopedModel<LinksModel>(
         model: linksModel,
         child: ScopedModelDescendant<LinksModel>(
@@ -71,6 +76,8 @@ class LinksList extends StatelessWidget {
     );
   }
 
+  /// Shows a dialog to delete a [ULink] and notify the database
+  /// [LinksDBWorker.db]
   Future _deleteULink(BuildContext context, ULink note) {
     return showDialog(
         context: context,
