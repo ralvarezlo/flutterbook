@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'LinksDBWorker.dart';
 import 'LinksModel.dart' show ULink, LinksModel, linksModel;
 
@@ -15,75 +14,6 @@ class LinksList extends StatelessWidget {
   }
 
   @override
-//  Widget build(BuildContext context) {
-//
-//    return ScopedModel<LinksModel>(
-//        model: linksModel,
-//        child: ScopedModelDescendant<LinksModel>(
-//            builder: (BuildContext context, Widget child, LinksModel model) {
-//              return Scaffold(
-//                  floatingActionButton: FloatingActionButton(
-//                      child: Icon(Icons.add, color: Colors.white),
-//                      onPressed: () {
-//                        linksModel.entityBeingEdited = ULink();
-//                        linksModel.setStackIndex(1);
-//                      }
-//                  ),
-//                  body: GridView.builder(
-//                      itemCount: linksModel.entityList.length,
-//                      itemBuilder: (BuildContext context, int index) {
-//                        ULink task = linksModel.entityList[index];
-//                        String actLink;
-//                        if (task.actLink != null) {
-//                          actLink = task.actLink;
-//                        }
-//                        return Container(
-//                          color: iterateColor(),
-//                          child: Slidable(
-//                              delegate: SlidableDrawerDelegate(),
-//                              actionExtentRatio: .25,
-//                              secondaryActions: <Widget>[
-//                                IconSlideAction(
-//                                  caption: "Delete",
-//                                  color: Colors.red,
-//                                  icon: Icons.delete,
-//                                  onTap: () => _deleteULink(context, task),
-//                                )
-//                              ],
-//
-//                              child: ListTile(
-//                                title: Center(
-//                                  child: Text(
-//                                      "${task.description}",
-//                                      style: task.completed ?
-//                                      TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
-//                                      TextStyle(color: Theme.of(context).textTheme.title.color)),
-//                                ),
-//                                onTap: () async {
-//                                  if (task.completed) {
-//                                    return;
-//                                  }
-//                                  linksModel.entityBeingEdited = await LinksDBWorker.db.get(task.id);
-//                                  if (linksModel.entityBeingEdited.actLink == null) {
-//                                    linksModel.setChosenLink(null);
-//                                  } else {
-//                                    linksModel.setChosenLink(actLink);
-//                                  }
-//                                  linksModel.setStackIndex(1);
-//                                },
-//                              )
-//                          ),
-//                        );
-//                      }, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                    crossAxisCount: 2
-//                  ),
-//                  )
-//              );
-//            }
-//        )
-//    );
-//  }
-
   Widget build(BuildContext context) {
 
     return ScopedModel<LinksModel>(
