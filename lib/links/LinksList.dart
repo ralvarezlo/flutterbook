@@ -5,8 +5,85 @@ import 'LinksDBWorker.dart';
 import 'LinksModel.dart' show ULink, LinksModel, linksModel;
 
 class LinksList extends StatelessWidget {
-  int colorOpacity = 500;
+  static num colorPicker = 0;
+  static final colors = [Colors.blueAccent, Colors.lightBlueAccent,
+                          Colors.cyanAccent, Colors.greenAccent];
+
+  Color iterateColor() {
+    colorPicker = (colorPicker+1)%3;
+    return colors[colorPicker];
+  }
+
   @override
+//  Widget build(BuildContext context) {
+//
+//    return ScopedModel<LinksModel>(
+//        model: linksModel,
+//        child: ScopedModelDescendant<LinksModel>(
+//            builder: (BuildContext context, Widget child, LinksModel model) {
+//              return Scaffold(
+//                  floatingActionButton: FloatingActionButton(
+//                      child: Icon(Icons.add, color: Colors.white),
+//                      onPressed: () {
+//                        linksModel.entityBeingEdited = ULink();
+//                        linksModel.setStackIndex(1);
+//                      }
+//                  ),
+//                  body: GridView.builder(
+//                      itemCount: linksModel.entityList.length,
+//                      itemBuilder: (BuildContext context, int index) {
+//                        ULink task = linksModel.entityList[index];
+//                        String actLink;
+//                        if (task.actLink != null) {
+//                          actLink = task.actLink;
+//                        }
+//                        return Container(
+//                          color: iterateColor(),
+//                          child: Slidable(
+//                              delegate: SlidableDrawerDelegate(),
+//                              actionExtentRatio: .25,
+//                              secondaryActions: <Widget>[
+//                                IconSlideAction(
+//                                  caption: "Delete",
+//                                  color: Colors.red,
+//                                  icon: Icons.delete,
+//                                  onTap: () => _deleteULink(context, task),
+//                                )
+//                              ],
+//
+//                              child: ListTile(
+//                                title: Center(
+//                                  child: Text(
+//                                      "${task.description}",
+//                                      style: task.completed ?
+//                                      TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
+//                                      TextStyle(color: Theme.of(context).textTheme.title.color)),
+//                                ),
+//                                onTap: () async {
+//                                  if (task.completed) {
+//                                    return;
+//                                  }
+//                                  linksModel.entityBeingEdited = await LinksDBWorker.db.get(task.id);
+//                                  if (linksModel.entityBeingEdited.actLink == null) {
+//                                    linksModel.setChosenLink(null);
+//                                  } else {
+//                                    linksModel.setChosenLink(actLink);
+//                                  }
+//                                  linksModel.setStackIndex(1);
+//                                },
+//                              )
+//                          ),
+//                        );
+//                      }, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//                    crossAxisCount: 2
+//                  ),
+//                  )
+//              );
+//            }
+//        )
+//    );
+//  }
+
   Widget build(BuildContext context) {
 
     return ScopedModel<LinksModel>(
@@ -22,57 +99,41 @@ class LinksList extends StatelessWidget {
                       }
                   ),
                   body: GridView.builder(
-                      itemCount: linksModel.entityList.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        ULink task = linksModel.entityList[index];
-                        String actLink;
-                        if (task.actLink != null) {
-                          actLink = task.actLink;
-                        }
-                        return Container(
-                          color: Colors.lightBlueAccent,
-                          child: Slidable(
-                              delegate: SlidableDrawerDelegate(),
-                              actionExtentRatio: .25,
-                              secondaryActions: <Widget>[
-                                IconSlideAction(
-                                  caption: "Delete",
-                                  color: Colors.red,
-                                  icon: Icons.delete,
-                                  onTap: () => _deleteULink(context, task),
-                                )
-                              ],
-
-                              child: ListTile(
-                                title: Center(
-                                  child: Text(
-                                      "${task.description}",
-                                      style: task.completed ?
-                                      TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
-                                      TextStyle(color: Theme.of(context).textTheme.title.color)),
-                                ),
-                                subtitle: task.actLink == null ? null :
-                                Text(actLink, style: task.completed ?
-                                    TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
-                                    TextStyle(color: Theme.of(context).textTheme.title.color)),
-                                onTap: () async {
-                                  if (task.completed) {
-                                    return;
-                                  }
-                                  linksModel.entityBeingEdited = await LinksDBWorker.db.get(task.id);
-                                  if (linksModel.entityBeingEdited.actLink == null) {
-                                    linksModel.setChosenLink(null);
-                                  } else {
-                                    linksModel.setChosenLink(actLink);
-                                  }
-                                  linksModel.setStackIndex(1);
-                                },
-                              )
+                    itemCount: linksModel.entityList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      ULink task = linksModel.entityList[index];
+                      String actLink;
+                      if (task.actLink != null) {
+                        actLink = task.actLink;
+                      }
+                      return GestureDetector(
+                        child: Container(
+                          color: iterateColor(),
+                          child: Center(
+                            child: Text(
+                                "${task.description}",
+                                style: task.completed ?
+                                TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
+                                TextStyle(color: Theme.of(context).textTheme.title.color)),
                           ),
-                        );
-                      }, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2
-                  ),
+                        ),
+                        onTap: () async {
+                          if (task.completed) {
+                            return;
+                          }
+                          linksModel.entityBeingEdited = await LinksDBWorker.db.get(task.id);
+                          if (linksModel.entityBeingEdited.actLink == null) {linksModel.setChosenLink(null);
+                          } else {
+                            linksModel.setChosenLink(actLink);
+                          }
+                          linksModel.setStackIndex(1);
+                          },
+                        onLongPress:() => _deleteULink(context, task),
+                      );
+                    },
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2
+                    ),
                   )
               );
             }
