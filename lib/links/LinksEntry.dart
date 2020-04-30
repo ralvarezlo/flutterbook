@@ -57,7 +57,7 @@ class LinksEntry extends StatelessWidget {
                     child: ListView(
                         children: [
                           ListTile(
-                              leading: Icon(Icons.content_paste),
+                              leading: Icon(Icons.text_fields),
                               title: TextFormField(
                                   keyboardType: TextInputType.multiline,
                                   maxLines: 1,
@@ -72,11 +72,11 @@ class LinksEntry extends StatelessWidget {
                               )
                           ),
                           ListTile(
-                            leading: Icon(Icons.today),
-                            title: Text("Link"),
+                            leading: Icon(Icons.link),
+                            title: Text("Read QR"),
                             subtitle: Text(_actLink()),
                             trailing: IconButton(
-                              icon: Icon(Icons.edit),
+                              icon: Icon(Icons.camera_alt),
                               color: Colors.blue,
                               onPressed: () async {
                                 print("Edit Pressed");

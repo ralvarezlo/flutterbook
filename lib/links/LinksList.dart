@@ -20,8 +20,7 @@ class LinksList extends StatelessWidget {
                         linksModel.setStackIndex(1);
                       }
                   ),
-                  body: ListView.builder(
-                      padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  body: GridView.builder(
                       itemCount: linksModel.entityList.length,
                       itemBuilder: (BuildContext context, int index) {
                         ULink task = linksModel.entityList[index];
@@ -30,7 +29,7 @@ class LinksList extends StatelessWidget {
                           actLink = task.actLink;
                         }
                         return Container(
-                          padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                          color: Colors.pink,
                           child: Slidable(
                               delegate: SlidableDrawerDelegate(),
                               actionExtentRatio: .25,
@@ -44,46 +43,21 @@ class LinksList extends StatelessWidget {
                               ],
 
                               child: ListTile(
-                                leading: Checkbox(
-                                    value: task.completed,
-                                    onChanged: (value) async {
-                                      task.completed = value;
-                                      await LinksDBWorker.db.update(task);
-                                      linksModel.loadData(LinksDBWorker.db);
-                                    }
-                                ),
                                 title: Text(
                                     "${task.description}",
                                     style: task.completed ?
-                                    TextStyle(color: Theme
-                                        .of(context)
-                                        .disabledColor,
-                                        decoration: TextDecoration.lineThrough) :
-                                    TextStyle(color: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .title
-                                        .color)),
+                                    TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
+                                    TextStyle(color: Theme.of(context).textTheme.title.color)),
                                 subtitle: task.actLink == null ? null :
-                                Text(actLink,
-                                    style: task.completed ?
-                                    TextStyle(color: Theme
-                                        .of(context)
-                                        .disabledColor,
-                                        decoration: TextDecoration.lineThrough) :
-                                    TextStyle(color: Theme
-                                        .of(context)
-                                        .textTheme
-                                        .title
-                                        .color)),
+                                Text(actLink, style: task.completed ?
+                                    TextStyle(color: Theme.of(context).disabledColor, decoration: TextDecoration.lineThrough) :
+                                    TextStyle(color: Theme.of(context).textTheme.title.color)),
                                 onTap: () async {
                                   if (task.completed) {
                                     return;
                                   }
-                                  linksModel.entityBeingEdited =
-                                  await LinksDBWorker.db.get(task.id);
-                                  if (linksModel.entityBeingEdited.actLink ==
-                                      null) {
+                                  linksModel.entityBeingEdited = await LinksDBWorker.db.get(task.id);
+                                  if (linksModel.entityBeingEdited.actLink == null) {
                                     linksModel.setChosenLink(null);
                                   } else {
                                     linksModel.setChosenLink(actLink);
@@ -93,7 +67,9 @@ class LinksList extends StatelessWidget {
                               )
                           ),
                         );
-                      }
+                      }, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2
+                  ),
                   )
               );
             }
