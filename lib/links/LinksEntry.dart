@@ -19,7 +19,7 @@ class LinksEntry extends StatelessWidget {
   }
 
   /// Builds a scaffold as a [ScopedModelDescendant] containing the entrypoints
-  /// for the information of an ULink
+  /// for the information of an ULink using a QR Scanner
   @override
   Widget build(BuildContext context) {
     return ScopedModel<LinksModel>(
